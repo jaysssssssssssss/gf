@@ -1,0 +1,145 @@
+     /* Reset some default styles */
+     body, h1, h2, p, input, button {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Body styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f9f3e7; /* Light pastel background */
+        color: #5e4b3a; /* Soft brown color */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Full height */
+        position: relative; /* Position for absolute children */
+        overflow: hidden; /* Prevent overflow of animated flowers */
+    }
+
+    /* Heading styles */
+    h1 {
+        font-size: 3rem; /* Larger font size for main heading */
+        margin-bottom: 10px;
+        color: #d5006d; /* Romantic pink color */
+        text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8); /* Soft shadow for text */
+        font-family: 'Georgia', serif; /* Serif font for elegance */
+        letter-spacing: 1px; /* Slightly increase space between letters */
+    }
+
+    h2 {
+        font-size: 2rem; /* Slightly smaller than h1 */
+        margin-bottom: 20px;
+        color: #ff6b81; /* Soft pink color for the second heading */
+        font-family: 'Georgia', serif; /* Same serif font for consistency */
+        text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5); /* Soft shadow */
+    }
+
+    /* Paragraph styles */
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        color: #5e4b3a; /* Soft brown for readability */
+        font-family: 'Arial', sans-serif; /* Sans-serif for clarity */
+        line-height: 1.5; /* Better line spacing */
+        text-align: center; /* Center align the text */
+    }
+
+    /* Animation for text elements */
+    @keyframes fadeInSlide {
+        0% {
+            opacity: 0; /* Start fully transparent */
+            transform: translateY(-20px); /* Start 20px above */
+        }
+        100% {
+            opacity: 1; /* End fully visible */
+            transform: translateY(0); /* End at original position */
+        }
+    }
+
+
+    /* Apply animation to headings and paragraph */
+    h1, h2, p {
+        animation: fadeInSlide 1s ease forwards, blink 5s ease-in-out infinite; /* Combined animations */
+    }
+
+    /* Delays for sequential animations */
+    h1 {
+        animation-delay: 0.5s, 0s; /* Delay for h1 */
+    }
+
+    h2 {
+        animation-delay: 1s, 0s; /* Delay for h2 */
+    }
+
+    p {
+        animation-delay: 1.5s, 0s; /* Delay for paragraph */
+    }
+
+    /* Form styles */
+    #nameForm {
+        background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow for the form */
+    }
+
+    /* Input styles */
+    input[type="text"] {
+        padding: 10px;
+        border: 1px solid #e0a4b3; /* Light pink border */
+        border-radius: 5px;
+        width: 200px; /* Fixed width */
+        margin-right: 10px; /* Spacing between input and button */
+    }
+
+    /* Button styles */
+    button {
+        padding: 10px 15px;
+        background-color: #e0a4b3; /* Light pink background */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    /* Button hover effect */
+    button:hover {
+        background-color: #d09ca3; /* Darker pink on hover */
+    }
+
+    /* Message styles */
+    #message {
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #6f4c3e; /* Soft brown for messages */
+    }
+
+
+    /* Heart styles */
+    .heart {
+        position: absolute;
+        bottom: 10%; /* Start above the bottom of the viewport */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, 0); /* Adjust for centering */
+        animation: float 1s ease-in-out infinite; /* Float animation */
+        font-size: 3rem; /* Adjust heart size */
+        color: #ff6b81; /* Soft pink color for the heart */
+    }
+
+
+    /* Animation for heart */
+    @keyframes float {
+        0% {
+            transform: translate(-50%, 0); /* Starting position */
+        }
+        50% {
+            transform: translate(-50%, -30px); /* Float up */
+        }
+        100% {
+            transform: translate(-50%, 0); /* Float back down */
+        }
+    }

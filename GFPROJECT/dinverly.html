@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Dinverly's Page</title>
+    <style>
+  body {
+        position: relative;
+        font-family: 'Arial', sans-serif;
+        color: #5e4b3a; /* Text color */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    /* Pseudo-element for background image with transparency */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('img/R.jpg'); /* Path to your background image */
+        background-size: cover; /* Ensures the image covers the entire background */
+        background-position: center;
+        opacity: 0.2; /* Adjust opacity to make it more or less transparent */
+        z-index: -2; /* Place it behind all other content */
+    }
+
+    /* Romantic overlay effect */
+    body::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(233, 150, 150, 0.3); /* Soft pink overlay */
+        z-index: -1; /* Behind the main content but above the background image */
+    }
+        /* Heading styles */
+        h1 {
+            font-size: 3rem; /* Larger font size for main heading */
+            margin-bottom: 10px;
+            color: #d5006d; /* Romantic pink color */
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8); /* Soft shadow for text */
+            font-family: 'Georgia', serif; /* Serif font for elegance */
+        }
+
+        /* Paragraph styles */
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #5e4b3a; /* Soft brown for readability */
+            font-family: 'Arial', sans-serif; /* Sans-serif for clarity */
+        }
+
+        /* Button styles */
+        .view-photo-button, .stop-button {
+            padding: 10px 20px;
+            background-color: #e0a4b3; /* Light pink background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.2rem;
+            margin: 10px; /* Add margin for spacing */
+        }
+
+        /* Button hover effect */
+        .view-photo-button:hover, .stop-button:hover {
+            background-color: #d5006d; /* Darker pink on hover */
+        }
+
+        /* Slideshow styles */
+        .slideshow-container {
+            display: none; /* Hidden by default */
+            width: 80%;
+            max-width: 800px; /* Max width for slideshow */
+            margin-top: 20px; /* Space between button and slideshow */
+        }
+
+        /* Slideshow media styles */
+        .slideshow-container img, .slideshow-container video {
+            width: 100%; /* Make images/videos responsive */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 500px; /* Fixed height for uniformity */
+            object-fit: contain; /* Maintain aspect ratio and fit the container */
+            border: 5px solid white; /* Romantic border */
+        }
+
+        /* Confirmation Box Styles */
+        .confirmation {
+            background-color: rgba(255, 255, 255, 0.9); /* Light background */
+            border-radius: 15px; /* Rounded corners */
+            padding: 20px; /* Padding for spacing */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+            margin-top: 20px; /* Space above */
+            max-width: 400px; /* Max width */
+            text-align: center; /* Center text */
+            display: none; /* Hidden by default */
+        }
+
+        /* Confirmation Input Styles */
+        .confirmation input[type="text"] {
+            padding: 10px;
+            border: 1px solid #e0a4b3; /* Light pink border */
+            border-radius: 5px;
+            width: calc(100% - 22px); /* Full width minus padding */
+            margin-top: 10px; /* Space above input */
+            margin-bottom: 15px; /* Space below input */
+            font-size: 1rem; /* Font size */
+        }
+
+        /* Confirmation Button Styles */
+        .confirmation button {
+            padding: 10px 15px;
+            background-color: #e0a4b3; /* Light pink background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem; /* Font size */
+        }
+
+        /* Button hover effect */
+        .confirmation button:hover {
+            background-color: #d5006d; /* Darker pink on hover */
+        }
+
+        /* Navigation Button Styles */
+        .nav-button {
+            padding: 10px 15px;
+            background-color: #e0a4b3; /* Light pink background */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem; /* Font size */
+            margin: 0 10px; /* Space between buttons */
+        }
+
+        /* Navigation Button hover effect */
+        .nav-button:hover {
+            background-color: #d09ca3; /* Darker pink on hover */
+        }
+                /* Floating animation styles */
+                .floating {
+            position: absolute;
+            font-size: 2rem;
+            color: #e06666; /* Soft red for hearts */
+            opacity: 0.7;
+            animation: floatAnimation 10s infinite;
+        }
+    
+ /* Floating animation styles */
+ .floating {
+        position: absolute;
+        bottom: -10%; /* Start slightly below the screen */
+        opacity: 0.8;
+        animation: floatAnimation 12s infinite;
+        font-size: 8rem; /* Adjust size of flowers */
+    }
+
+    /* Keyframes for curved floating animation */
+    @keyframes floatAnimation {
+        0% {
+            transform: translate(0, 0);
+            opacity: 0;
+        }
+        25% {
+            transform: translate(20px, -20vh); /* Slight curve to the right and up */
+            opacity: 0.7;
+        }
+        50% {
+            transform: translate(-20px, -40vh); /* Curve to the left */
+            opacity: 1;
+        }
+        75% {
+            transform: translate(20px, -60vh); /* Curve back to the right */
+            opacity: 0.7;
+        }
+        100% {
+            transform: translate(-20px, -100vh); /* Final curve to the left and upwards */
+            opacity: 0;
+        }
+    }
+       /* Logout button styles */
+       .logout-button {
+        padding: 12px 24px;
+        background-color: #e0a4b3; /* Light pink background for a romantic feel */
+        color: white;
+        border: 2px solid #d09ca3; /* Border to enhance classic look */
+        border-radius: 50px; /* Rounded shape */
+        font-size: 1.2rem;
+        cursor: pointer;
+        font-family: 'Georgia', serif; /* Elegant serif font */
+        transition: background-color 0.3s, color 0.3s;
+        box-shadow: 0 4px 10px rgba(208, 156, 163, 0.4); /* Soft shadow for depth */
+        margin-top: 20px; /* Space from other elements */
+    }
+
+    /* Logout button hover effect */
+    .logout-button:hover {
+        background-color: #d5006d; /* Darker pink for hover effect */
+        color: #ffffff;
+        box-shadow: 0 6px 15px rgba(208, 156, 163, 0.6); /* Stronger shadow on hover */
+    }
+
+    /* Logout button active effect */
+    .logout-button:active {
+        background-color: #b3005d; /* Even darker shade when clicked */
+        box-shadow: 0 2px 5px rgba(208, 156, 163, 0.3); /* Softer shadow on click */
+    }
+       /* Additional SweetAlert custom styling */
+       .swal2-popup.romantic-popup {
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(208, 156, 163, 0.5); /* Soft shadow */
+    }
+
+    .swal2-confirm.romantic-confirm-button {
+        font-family: 'Georgia', serif; /* Classic serif font */
+        font-size: 1.1rem;
+        padding: 10px 20px;
+        border-radius: 10px;
+    }
+    </style>
+    
+</head>
+<body>   
+    <h1>Welcome, Dinverly!</h1>
+    <p>This is your personalized page. Enjoy your stay!</p>
+    <button class="view-photo-button" onclick="showConfirmation()">View Our Photos</button>
+
+    <div class="confirmation" id="confirmation">
+        <p>Enter the confirmation Anniversary Date to proceed:</p>
+        <input type="text" id="confirmationInput" placeholder="Enter your Anniversary Date">
+        <button onclick="checkConfirmation()">Confirm</button>
+    </div>
+   
+
+<!-- Floating hearts and flowers container -->
+<div id="floatingContainer"></div>
+
+    <div class="slideshow-container" id="slideshowContainer">
+        <video id="preloadedVideo" style="display: none;"></video>
+        <img id="slideshowImage">
+        <div class="navigation">
+            <button class="nav-button" onclick="prevImage()">❮ Prev</button>
+            <button class="nav-button" onclick="nextImage()">Next ❯</button>
+        </div>
+        <button class="stop-button" onclick="stopSlideshow()">Stop Slideshow</button>
+    </div>
+    <button class="logout-button" onclick="logout()">Logout</button>
+    <audio id="romanticMusic" src="music/music.mp3" preload="auto"></audio>
+
+    <!-- Hidden video element for preloading -->
+
+    <script>
+        const images = [
+            'vid/vid37.mp4', 'img/img1.jpeg',
+            'img/img2.jpeg',
+            'img/img3.jpeg',
+            'img/img4.jpeg',
+            'img/img5.jpeg',
+            'img/img6.jpeg',
+            'img/img7.jpeg',
+            'img/img8.jpeg',
+            'img/img9.jpeg',
+            'img/img10.jpeg',
+            'img/img11.jpeg',
+            'img/img12.jpeg',
+            'img/img13.jpeg',
+            'img/img14.jpeg',
+            'img/img15.jpeg',
+            'img/img16.jpeg',
+            'img/img17.jpeg',
+            'img/img18.jpeg',
+            'img/img19.jpeg',
+            'img/img20.jpeg',
+            'img/img21.jpeg',
+            'img/img22.jpeg',
+            'img/img23.jpeg',
+            'img/img24.jpeg',
+            'img/img25.jpg',  // .jpg extension
+            'img/img26.jpg',  // .jpg extension
+            'img/img27.jpg',  // .jpg extension
+            'img/img28.jpg',  // .jpg extension
+            'img/img29.jpg',  // .jpg extension
+            'img/img30.jpg',  // .jpg extension
+            'img/img31.jpg',  // .jpg extension
+            'img/img32.jpg',  // .jpg extension
+            'img/img33.jpg',  // .jpg extension
+            'img/img34.jpg',  // .jpg extension
+            'img/img35.jpg',  // .jpg extension
+            'img/img36.jpg' 
+            // Correct path for the video file
+        ];
+
+        let currentIndex = 0;
+        let slideshowInterval;
+
+        function showConfirmation() {
+            document.getElementById('confirmation').style.display = 'block';
+            document.getElementById('slideshowContainer').style.display = 'none';
+        }
+
+        function checkConfirmation() {
+            const input = document.getElementById('confirmationInput').value;
+            if (input === '10/17/2018') { // Change this to your desired confirmation number
+                document.getElementById('confirmation').style.display = 'none';
+                startSlideshow();
+                playMusic(); // Play romantic music upon confirmation
+            } else {
+                alert('Incorrect confirmation number. Please try again.');
+            }
+        }
+
+        function playMusic() {
+            const music = document.getElementById('romanticMusic');
+            music.play(); // Start playing music
+        }
+
+        function startSlideshow() {
+            document.getElementById('slideshowContainer').style.display = 'block';
+            showImage(currentIndex);
+            slideshowInterval = setInterval(nextImage, 10000); // Change image every 5 seconds
+        }
+
+        function stopSlideshow() {
+            clearInterval(slideshowInterval); // Stop the slideshow
+            document.getElementById('slideshowContainer').style.display = 'none'; // Hide slideshow
+            document.getElementById('confirmation').style.display = 'none'; // Hide confirmation
+            document.querySelector('h1').style.display = 'block'; // Show welcome message again
+            document.querySelector('p').style.display = 'block'; // Show welcome paragraph again
+            const music = document.getElementById('romanticMusic');
+            music.pause(); // Pause the music if needed
+            music.currentTime = 0; // Reset music to start
+        }
+
+        function showImage(index) {
+    const slideshowImage = document.getElementById('slideshowImage');
+    const preloadedVideo = document.getElementById('preloadedVideo');
+    const placeholderImage = 'https://via.placeholder.com/150'; // Placeholder in case both extensions fail
+    let imagePath = images[index];
+
+    if (images[index].endsWith('.mp4')) {
+        // Video handling code
+        slideshowImage.style.display = 'none';
+        preloadedVideo.src = images[index];
+        preloadedVideo.style.display = 'block';
+        preloadedVideo.play();
+        preloadedVideo.onended = function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        };
+    } else {
+        // Try loading the image with .jpeg and fallback to .jpg if it fails
+        slideshowImage.style.display = 'block';
+        preloadedVideo.style.display = 'none';
+        
+        // Load .jpeg first, fallback to .jpg if not found
+        slideshowImage.src = imagePath;
+        slideshowImage.onerror = function() {
+            if (imagePath.endsWith('.jpeg')) {
+                imagePath = imagePath.replace('.jpeg', '.jpg');
+            } else if (imagePath.endsWith('.jpg')) {
+                imagePath = imagePath.replace('.jpg', '.jpeg');
+            }
+            slideshowImage.src = imagePath; // Try alternative extension
+            
+            // Set placeholder if both fail
+            slideshowImage.onerror = function() {
+                slideshowImage.src = placeholderImage;
+            };
+        };
+    }
+}
+
+function logout() {
+        // SweetAlert popup
+        Swal.fire({
+            title: 'Logged Out',
+            text: 'You have been logged out. Have a wonderful day!',
+            icon: 'success',
+            confirmButtonText: 'Proceed',
+            confirmButtonColor: '#d5006d', // Romantic pink color
+            background: '#f9f3e7', // Soft pastel background to match theme
+            color: '#5e4b3a', // Soft brown text color
+            customClass: {
+                popup: 'romantic-popup',
+                confirmButton: 'romantic-confirm-button'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to index.html when the user clicks "Proceed"
+                window.location.href = 'index.html';
+            }
+        });
+    }
+
+
+function nextImage() {
+    currentIndex = (currentIndex + 1) % images.length; // Cycles back to start after the last image
+    showImage(currentIndex);
+}
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length; // Cycle back to the start if at the end
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length; // Loop to end
+            showImage(currentIndex);
+        }
+
+ const emojis = ["😘", "💕", "😍", "❤️", "💖", "🥰", "😘", "😍", "🤗", "😚", "😙", "😗", "😉", "🫣", "🎈", "💐", "🌺", "🌸", "🌻", "💮", "🌼", "🪷", "🌷", "🌹", "🪻", "🥀", "🎴"];
+
+// Function to create floating emoji elements
+function createFloatingElements() {
+    const container = document.getElementById('floatingContainer');
+    setInterval(() => {
+        const element = document.createElement('div');
+        element.classList.add('floating');
+        element.textContent = emojis[Math.floor(Math.random() * emojis.length)]; // Random emoji
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.fontSize = (Math.random() * 2 + 1) + 'rem'; // Random font size
+        element.style.animationDuration = (Math.random() * 7 + 7) + 's'; // Slower animation duration
+        container.appendChild(element);
+
+        // Remove element after animation ends to avoid clutter
+        setTimeout(() => {
+            element.remove();
+        }, 14000);
+    }, 1500); // New emoji every 1.5 seconds
+}
+
+// Call createFloatingElements when the slideshow is started
+function checkConfirmation() {
+    const input = document.getElementById('confirmationInput').value;
+    if (input === '10/17/2018') {
+        document.getElementById('confirmation').style.display = 'none';
+        startSlideshow();
+        playMusic();
+        createFloatingElements(); // Start floating emojis
+    } else {
+        alert('Incorrect confirmation number. Please try again.');
+    }
+}
+    </script>
+</body>
+</html>
